@@ -9,7 +9,14 @@ public class Player : MonoBehaviour
     private float flap = 400f;
     private Rigidbody rb;
     private GameObject button;
-    private string state = "idle";
+
+    enum STATE
+    {
+        RUN,
+        JUMP,
+        START,
+    };
+    private STATE state = STATE.RUN;
 
     void Start()
     {
@@ -20,12 +27,12 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (state == "run")
+        if (state == STATE.RUN)
         {
             transform.position += transform.right * 0.08f;
             if (transform.position.x > -3.5)
             {
-                state = "Start";
+                state = STATE.START;
             }
         }
 
@@ -39,7 +46,7 @@ public class Player : MonoBehaviour
 
     public void StartGame()
     {
-        state = "run";
+        state = STATE.RUN;
         button.SetActive(false);
         animator.SetTrigger("run");
     }

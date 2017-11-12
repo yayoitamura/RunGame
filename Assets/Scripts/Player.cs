@@ -19,11 +19,11 @@ public class Player : MonoBehaviour
 
     enum STATE
     {
+        START,
         RUN,
         JUMP,
-        START,
     };
-    private STATE state = STATE.RUN;
+    private STATE state = STATE.START;
 
     void Start()
     {

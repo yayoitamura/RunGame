@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Item : MonoBehaviour 
 {
+    enum GAME
+    {
+        START,
+        PLAY,
+        END,
+    };
+    private GAME game = GAME.START;
 
 	// Use this for initialization
 	void Start () 

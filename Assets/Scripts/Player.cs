@@ -81,30 +81,35 @@ public class Player : MonoBehaviour
                 }
                 break;
             case STATE.RUN:
-                // HP上昇
-                hp -= 0.02f;
-                if (hp < slider.maxValue / 5)
-                {
-                    image.color = Color.red;
-                    if (hp < slider.minValue)
-                    {
-                        Dead();
-                    }
-                }
-                // HPゲージに値を設定
-                slider.value = hp;
+                Decrease();
                 if (Input.GetButtonDown("Horizontal"))
                 {
                     state = STATE.JUMP;
                 }
                 break;
             case STATE.JUMP:
-                Debug.Log(Input.mousePosition);
+                Decrease();
                 animator.SetTrigger("jump");
                 rb.AddForce(Vector2.up * flap);
                 state = STATE.RUN;
                 break;
         }
+    }
+
+    void Decrease()
+    {
+        // HP上昇
+        hp -= 0.02f;
+        if (hp < slider.maxValue / 5)
+        {
+            image.color = Color.red;
+            if (hp < slider.minValue)
+            {
+                Dead();
+            }
+        }
+        // HPゲージに値を設定
+        slider.value = hp;
     }
 
     void EndGame()

@@ -23,17 +23,13 @@ public class Player : MonoBehaviour
         RUN,
         JUMP,
     };
-    enum GAME
-    {
-        BEGIN,
-        PLAY,
-        END,
-    };
+
     private STATE state = STATE.WAIT;
-    private GAME game = GAME.BEGIN;
 
     void Start()
     {
+        //GameState.GameState;
+
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         button = GameObject.Find("Button");
@@ -47,21 +43,21 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        switch (game)
+        switch (GameManager.instance.GAME)
         {
-            case GAME.BEGIN:
+            case GameManager.GAMESTATE.BEGIN:
                 break;
-            case GAME.PLAY:
+            case GameManager.GAMESTATE.PLAY:
                 PlayGame();
                 break;
-            case GAME.END:
+            case GameManager.GAMESTATE.END:
                 break;
         }
     }
 
     public void StartGame()
     {
-        game = GAME.PLAY;
+        GameManager.instance.GAME = GameManager.GAMESTATE.PLAY;
         button.SetActive(false);
         animator.SetTrigger("run");
     }
@@ -81,14 +77,14 @@ public class Player : MonoBehaviour
                 }
                 break;
             case STATE.RUN:
-                Decrease();
+                DecreaseHp();
                 if (Input.GetButtonDown("Horizontal"))
                 {
                     state = STATE.JUMP;
                 }
                 break;
             case STATE.JUMP:
-                Decrease();
+                DecreaseHp();
                 animator.SetTrigger("jump");
                 rb.AddForce(Vector2.up * flap);
                 state = STATE.RUN;
@@ -96,7 +92,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Decrease()
+    void DecreaseHp()
     {
         // HP上昇
         hp -= 0.02f;
@@ -119,6 +115,8 @@ public class Player : MonoBehaviour
 
     public void Dead() 
     {
+        GameManager.instance.GAME = GameManager.GAMESTATE.END;
+
         button.SetActive(true);
         //this.gameObject.SetActive(false);    
     }

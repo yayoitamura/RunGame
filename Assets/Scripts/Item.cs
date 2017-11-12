@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class Item : MonoBehaviour 
 {
-    enum GAME
-    {
-        BEGIN,
-        PLAY,
-        END,
-    };
-    private GAME game = GAME.BEGIN;
 
 	// Use this for initialization
 	void Start () 
@@ -32,11 +25,6 @@ public class Item : MonoBehaviour
         //// マテリアルにオフセットを設定する
         //GetComponent<Renderer>().sharedMaterial.SetTextureOffset("_MainTex", offset);
 	}
-
-    public void StartGame()
-    {
-        game = GAME.PLAY;
-    }
 }
 
 

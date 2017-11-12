@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; // ←※これを忘れずに入れる
+
 
 public class Player : MonoBehaviour 
 {
@@ -9,6 +11,11 @@ public class Player : MonoBehaviour
     private float flap = 400f;
     private Rigidbody rb;
     private GameObject button;
+
+    private float hp;
+
+    Slider slider;
+    Image image;
 
     enum STATE
     {
@@ -23,6 +30,12 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         button = GameObject.Find("Button");
+
+        // スライダーを取得する
+        slider = GameObject.Find("Slider").GetComponent<Slider>();
+        image = GameObject.Find("Fill").GetComponent<Image>();
+        //player = GameObject.Find("Player").GetComponent<Player>();
+        hp = slider.maxValue;
     }
 
     void Update()
@@ -42,6 +55,20 @@ public class Player : MonoBehaviour
             animator.SetTrigger("jump");
             rb.AddForce(Vector2.up * flap);
         }
+
+        // HP上昇
+        hp -= 0.02f;
+        if (hp < slider.maxValue / 5)
+        {
+            image.color = Color.red;
+            if (hp < slider.minValue)
+            {
+                Dead();
+            }
+        }
+
+        // HPゲージに値を設定
+        slider.value = hp;
     }
 
     public void StartGame()

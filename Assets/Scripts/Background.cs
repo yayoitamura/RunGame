@@ -7,11 +7,11 @@ public class Background : MonoBehaviour
 
     enum GAME
     {
-        START,
+        BEGIN,
         PLAY,
         END,
     };
-    private GAME game = GAME.START;
+    private GAME game = GAME.BEGIN;
 
     void Update()
     {
@@ -23,6 +23,11 @@ public class Background : MonoBehaviour
 
          // マテリアルにオフセットを設定する
          GetComponent<Renderer>().sharedMaterial.SetTextureOffset("_MainTex", offset);
+    }
+
+    public void StartGame()
+    {
+        game = GAME.PLAY;
     }
 }
 

@@ -19,11 +19,18 @@ public class Player : MonoBehaviour
 
     enum STATE
     {
-        START,
+        WAIT,
         RUN,
         JUMP,
     };
-    private STATE state = STATE.START;
+    enum GAME
+    {
+        BEGIN,
+        PLAY,
+        END,
+    };
+    private STATE state = STATE.WAIT;
+    private GAME game = GAME.BEGIN;
 
     void Start()
     {
@@ -40,43 +47,70 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (state == STATE.RUN)
+        switch (game)
         {
-            transform.position += transform.right * 0.08f;
-            if (transform.position.x > -3.5)
-            {
-                state = STATE.START;
-            }
+            case GAME.BEGIN:
+                break;
+            case GAME.PLAY:
+                PlayGame();
+                break;
+            case GAME.END:
+                break;
         }
-
-        if (Input.GetButtonDown("Horizontal"))
-        {
-            Debug.Log(Input.mousePosition);
-            animator.SetTrigger("jump");
-            rb.AddForce(Vector2.up * flap);
-        }
-
-        // HP上昇
-        hp -= 0.02f;
-        if (hp < slider.maxValue / 5)
-        {
-            image.color = Color.red;
-            if (hp < slider.minValue)
-            {
-                Dead();
-            }
-        }
-
-        // HPゲージに値を設定
-        slider.value = hp;
     }
 
     public void StartGame()
     {
-        state = STATE.RUN;
+        game = GAME.PLAY;
         button.SetActive(false);
         animator.SetTrigger("run");
     }
+    void BeginGame()
+    {
+        
+    }
+    void PlayGame()
+    {
+        switch (state)
+        {
+            case STATE.WAIT:
+                transform.position += transform.right * 0.08f;
+                if (transform.position.x > -3.5)
+                {
+                    state = STATE.RUN;
+                }
+                break;
+            case STATE.RUN:
+                // HP上昇
+                hp -= 0.02f;
+                if (hp < slider.maxValue / 5)
+                {
+                    image.color = Color.red;
+                    if (hp < slider.minValue)
+                    {
+                        Dead();
+                    }
+                }
+                // HPゲージに値を設定
+                slider.value = hp;
+                if (Input.GetButtonDown("Horizontal"))
+                {
+                    state = STATE.JUMP;
+                }
+                break;
+            case STATE.JUMP:
+                Debug.Log(Input.mousePosition);
+                animator.SetTrigger("jump");
+                rb.AddForce(Vector2.up * flap);
+                state = STATE.RUN;
+                break;
+        }
+    }
+
+    void EndGame()
+    {
+    }
+
 
     public void Dead() 
     {

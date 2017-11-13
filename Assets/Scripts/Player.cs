@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     private float flap = 400f;
     private Rigidbody rb;
     private GameObject button;
+    private int jumpCount;
 
     private float hp;
 
@@ -78,7 +79,7 @@ public class Player : MonoBehaviour
                 break;
             case STATE.RUN:
                 DecreaseHp();
-                if (Input.GetButtonDown("Horizontal"))
+                if (Input.GetButtonDown("Horizontal") && jumpCount < 2)
                 {
                     state = STATE.JUMP;
                 }
@@ -87,6 +88,7 @@ public class Player : MonoBehaviour
                 DecreaseHp();
                 animator.SetTrigger("jump");
                 rb.AddForce(Vector2.up * flap);
+                jumpCount++;
                 state = STATE.RUN;
                 break;
         }
@@ -94,8 +96,9 @@ public class Player : MonoBehaviour
 
     void DecreaseHp()
     {
-        // HP上昇
+        // HP減少
         hp -= 0.02f;
+        //HPが残り少なくなると赤色に
         if (hp < slider.maxValue / 5)
         {
             image.color = Color.red;
@@ -119,6 +122,15 @@ public class Player : MonoBehaviour
 
         button.SetActive(true);
         //this.gameObject.SetActive(false);    
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("hogehogehoge");
+        if (collision.gameObject.tag == "Ground")
+        {
+            jumpCount = 0;
+        }
     }
 }
 

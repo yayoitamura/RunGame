@@ -126,7 +126,6 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("hogehogehoge");
         if (collision.gameObject.tag == "Ground")
         {
             jumpCount = 0;

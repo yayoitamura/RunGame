@@ -130,6 +130,22 @@ public class Player : MonoBehaviour
         {
             jumpCount = 0;
         }
+
+
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Item")
+        {
+ 
+        }
+
+        if (other.gameObject.tag == "HpItem")
+        {
+            hp += 10;
+        }
     }
 }
 

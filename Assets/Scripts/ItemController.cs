@@ -3,49 +3,64 @@ using System.Collections;
 
 public class ItemController : MonoBehaviour
 {
-    // Waveプレハブを格納する
-    public GameObject[] waves;
+    // clustersプレハブを格納する
+    public GameObject[] clusters;
 
-    // 現在のWave
-    private int currentWave;
+    // 現在のclusters
+    private int currentclusters;
 
     IEnumerator Start()
     {
 
-        // Waveが存在しなければコルーチンを終了する
-        if (waves.Length == 0)
+        // clustersが存在しなければコルーチンを終了する
+        if (clusters.Length == 0)
         {
             yield break;
         }
 
         while (true)
         {
+            // clusterを作成する
+            GameObject cluster = (GameObject)Instantiate(clusters[currentclusters], transform.position, Quaternion.identity);
 
-            // Waveを作成する
-            GameObject wave = (GameObject)Instantiate(waves[currentWave], transform.position, Quaternion.identity);
+            // cluster をEmitterの子要素にする
+            cluster.transform.parent = transform;
 
-            // WaveをEmitterの子要素にする
-            wave.transform.parent = transform;
-
-            // Waveの子要素のEnemyが全て削除されるまで待機する
-            while (wave.transform.childCount != 0)
+            // clusterの子要素のEnemyが全て削除されるまで待機する
+            while (cluster.transform.childCount != 0)
             {
                 yield return new WaitForEndOfFrame();
             }
 
-            // Waveの削除
-            Destroy(wave);
+            // clusterの削除
+            Destroy(cluster);
 
-            // 格納されているWaveを全て実行したらcurrentWaveを0にする（最初から -> ループ）
-            if (waves.Length <= ++currentWave)
+            // 格納されているclusterを全て実行したらcurrentclustersを0にする（最初から -> ループ）
+            if (clusters.Length <= ++currentclusters)
             {
-                currentWave = 0;
+                currentclusters = 0;
             }
 
         }
     }
-
+  
     void Update()
+    {
+        switch (GameManager.instance.GAME)
+        {
+            case GameManager.GAMESTATE.BEGIN:
+                break;
+            case GameManager.GAMESTATE.PLAY:
+                Move();
+                break;
+            case GameManager.GAMESTATE.END:
+                break;
+        }
+
+
+    }
+
+    void Move()
     {
         transform.position += transform.right * -0.05f;
     }

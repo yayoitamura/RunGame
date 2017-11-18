@@ -107,7 +107,7 @@ public class Player : MonoBehaviour
     void DecreaseHp()
     {
         // HP減少
-        hp -= 0.02f;
+        hp -= Time.deltaTime;
         //HPが残り少なくなると赤色に
         if (hp < slider.maxValue / 5)
         {

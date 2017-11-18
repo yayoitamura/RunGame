@@ -14,9 +14,11 @@ public class Player : MonoBehaviour
     private int jumpCount;
 
     private float hp;
+    private int score = 000000;
 
     Slider slider;
     Image image;
+    Text scoreText;
 
     enum STATE
     {
@@ -32,13 +34,15 @@ public class Player : MonoBehaviour
         //GameState.GameState;
 
         animator = GetComponent<Animator>();
+
         rb = GetComponent<Rigidbody>();
+
         button = GameObject.Find("Button");
+        scoreText = GameObject.Find("Score").GetComponent<Text>();
 
         // スライダーを取得する
         slider = GameObject.Find("Slider").GetComponent<Slider>();
         image = GameObject.Find("Fill").GetComponent<Image>();
-        //player = GameObject.Find("Player").GetComponent<Player>();
         hp = slider.maxValue;
     }
 
@@ -52,15 +56,21 @@ public class Player : MonoBehaviour
                 PlayGame();
                 break;
             case GameManager.GAMESTATE.END:
+                EndGame();
                 break;
         }
     }
 
     public void StartGame()
     {
+        image.color = Color.green;
+
+        hp = slider.maxValue;
         GameManager.instance.GAME = GameManager.GAMESTATE.PLAY;
         button.SetActive(false);
         animator.SetTrigger("run");
+
+        scoreText.text = score.ToString();
     }
     void BeginGame()
     {
@@ -113,6 +123,8 @@ public class Player : MonoBehaviour
 
     void EndGame()
     {
+        
+
     }
 
 
@@ -139,7 +151,8 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.tag == "Item")
         {
- 
+            score += 1;
+            scoreText.text = score.ToString();
         }
 
         if (other.gameObject.tag == "HpItem")

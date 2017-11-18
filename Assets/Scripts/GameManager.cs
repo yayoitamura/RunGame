@@ -1,38 +1,42 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.UI; // ←※これを忘れずに入れる
 
 public class GameManager : MonoBehaviour
 {
-    private float _hp;
-
-    Slider _slider;
-    Image _image;
-    public GameObject player;
-
-    void Start()
+    public enum GAMESTATE
     {
-        // スライダーを取得する
-        _slider = GameObject.Find("Slider").GetComponent<Slider>();
-        _image = GameObject.Find("Fill").GetComponent<Image>();
-        //player = GameObject.Find("Player").GetComponent<Player>();
-        _hp = _slider.maxValue;
+        BEGIN,
+        PLAY,
+        END,
+    };
+    public GAMESTATE GAME = GAMESTATE.BEGIN;
+    private static GameManager _instance;
+
+    public static GameManager instance
+    {
+        get
+        {
+            if (!_instance)
+            {
+                var go = new GameObject("GameManager");
+                DontDestroyOnLoad(go);
+                _instance = go.AddComponent<GameManager>();
+            }
+            return _instance;
+        }
     }
 
-    void Update()
+    private void Awake()
     {
-        // HP上昇
-        _hp -= 0.02f;
-        if (_hp < _slider.maxValue / 5)
+        if (_instance == null)
         {
-            _image.color = Color.red;
-            if (_hp < _slider.minValue)
-            {
-                player.GetComponent<Player>().Dead();
-            }
+            _instance = this;
         }
-
-        // HPゲージに値を設定
-        _slider.value = _hp;
+        else
+        {
+            // 本来のSingletonの実装ではコンストラクタをprivateにして外からnewできないようにするが、
+            // MonoBehaviourではコンストラクタを定義できない。
+            // そのため、すでにインスタンスがあったら破棄する。
+            Destroy(this);
+        }
     }
 }

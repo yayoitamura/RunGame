@@ -7,10 +7,10 @@ public class Background : MonoBehaviour
 
     void Update()
     {
-        // 時間によってYの値が0から1に変化していく。1になったら0に戻り、繰り返す。
+        // 時間によってxの値が0から1に変化していく。1になったら0に戻り、繰り返す。
         float x = Mathf.Repeat(Time.time * speed, 1);
 
-         // Yの値がずれていくオフセットを作成
+         // xの値がずれていくオフセットを作成
          Vector2 offset = new Vector2(x, 0);
 
          // マテリアルにオフセットを設定する
@@ -28,10 +28,7 @@ public class Background : MonoBehaviour
 public class Background : MonoBehaviour
 {
     // スクロールするスピード
-    private float speed = 0.2f;
-    private string state = "none";
-
-    void Update()
+    p  void Update()
     {
         if (state == "start")
         {

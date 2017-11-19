@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     private Vector3 moveDirection;
     private Animator animator;
     private float flap = 400f;
-    private Rigidbody rb;
+    private Rigidbody2D rb;
     private GameObject button;
     private int jumpCount;
 
@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
 
         animator = GetComponent<Animator>();
 
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody2D>();
 
         button = GameObject.Find("Button");
         scoreText = GameObject.Find("Score").GetComponent<Text>();
@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
         button.SetActive(false);
         animator.SetTrigger("run");
 
-        scoreText.text = score.ToString();
+        scoreText.text = string.Format("{0:D6}", score);
     }
     void BeginGame()
     {
@@ -136,23 +136,21 @@ public class Player : MonoBehaviour
         //this.gameObject.SetActive(false);    
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
         {
             jumpCount = 0;
         }
-
-
-
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log(state);
         if (other.gameObject.tag == "Item")
         {
-            score += 1;
-            scoreText.text = score.ToString();
+            score += 100;
+            scoreText.text = string.Format("{0:D6}", score);
         }
 
         if (other.gameObject.tag == "HpItem")

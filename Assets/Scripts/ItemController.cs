@@ -4,12 +4,10 @@ using System.Collections.Generic;
 
 public class ItemController : MonoBehaviour
 {
-    // clusterPrefabsプレハブを格納する
-    public GameObject[] clusterPrefabs;
+    // ItemPatternPrefabsプレハブを格納する
+    public GameObject[] ItemPatternPrefabs;
 
-    // 現在のclusterPrefabs
-    private int currentclusterPrefabs;
-    private List<GameObject> clusters = new List<GameObject>();
+    private List<GameObject> itemPatterns = new List<GameObject>();
   
     void Update()
     {
@@ -31,27 +29,27 @@ public class ItemController : MonoBehaviour
 
     void Appear()
     {
-        if(clusters.Count == 0 || clusters[clusters.Count -1].transform.position.x < 8)
+        if(itemPatterns.Count == 0 || itemPatterns[itemPatterns.Count -1].transform.position.x < 8)
         {
-            currentclusterPrefabs = Random.Range(0, clusterPrefabs.Length);
-            clusters.Add(Instantiate(clusterPrefabs[currentclusterPrefabs], transform.position, Quaternion.identity));
+            int currentPrefab = Random.Range(0, ItemPatternPrefabs.Length);
+            itemPatterns.Add(Instantiate(ItemPatternPrefabs[currentPrefab], transform.position, Quaternion.identity));
         }
     }
 
     void Move()
     {
-        for (int i = 0; i < clusters.Count; i++)
+        for (int i = 0; i < itemPatterns.Count; i++)
         {
-            clusters[i].transform.position += transform.right * -0.05f;
+            itemPatterns[i].transform.position += transform.right * -0.05f;
         }
     }
 
     void Vanish()
     {
-        if (clusters[0].transform.position.x < -10)
+        if (itemPatterns[0].transform.position.x < -10)
         {
-            Destroy(clusters[0]);
-            clusters.RemoveAt(0);
+            Destroy(itemPatterns[0]);
+            itemPatterns.RemoveAt(0);
         }
     }
 }

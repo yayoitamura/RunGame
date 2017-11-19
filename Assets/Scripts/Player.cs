@@ -146,7 +146,6 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(state);
         if (other.gameObject.tag == "Item")
         {
             score += 100;

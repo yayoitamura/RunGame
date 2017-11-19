@@ -8,7 +8,6 @@ public class Ground : MonoBehaviour {
     public GameObject[] grounds;
     private GameObject ground;
     private float speed = 0.2f;
-    Collider stepCollider;
 
     // 現在のground
     private int currentGround;
@@ -53,13 +52,11 @@ public class Ground : MonoBehaviour {
 
     private void Update()
     {
-        Debug.Log(stepCollider);
         transform.position += transform.right * -0.05f;
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("contact");
         if (collision.gameObject.tag == "contact")
         {
             ground = (GameObject)Instantiate(grounds[currentGround], transform.position, Quaternion.identity);

@@ -4,18 +4,25 @@ using UnityEngine;
 
 public class Item : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
+    public GameObject particlePrefab;
+
+	void Start () 
+    {
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
+	void Update () 
+    {
 	}
 
-    void OnBecameInvisible()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        Destroy(this.gameObject);
+        if (other.gameObject.tag == "Player")
+        {
+            ParticleSystem particle = Instantiate(particlePrefab, transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
+            particle.Play();
+            Destroy(gameObject);
+            ParticleSystem.MainModule mainModule = particle.main;
+            Destroy(particle.gameObject, mainModule.duration);
+        }
     }
 }

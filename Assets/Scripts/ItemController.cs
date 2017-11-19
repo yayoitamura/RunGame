@@ -33,7 +33,7 @@ public class ItemController : MonoBehaviour
     {
         if(clusters.Count == 0 || clusters[clusters.Count -1].transform.position.x < 8)
         {
-            currentclusterPrefabs = Random.Range(0, 3);
+            currentclusterPrefabs = Random.Range(0, clusterPrefabs.Length);
             clusters.Add(Instantiate(clusterPrefabs[currentclusterPrefabs], transform.position, Quaternion.identity));
         }
     }

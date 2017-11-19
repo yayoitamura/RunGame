@@ -54,6 +54,7 @@ public class ItemController : MonoBehaviour
                 break;
             case GameManager.GAMESTATE.PLAY:
                 Appear();
+                Disappear();
                 Move();
                 break;
             case GameManager.GAMESTATE.END:
@@ -65,8 +66,8 @@ public class ItemController : MonoBehaviour
 
     void Appear()
     {
-        int last = clusters.Count - 1;
-        Debug.Log(clusters.Count);
+        //int last = clusters.Count - 1;
+        //Debug.Log(clusters.Count);
 
         if(clusters.Count == 0 || clusters[clusters.Count -1].transform.position.x < 8)
         {
@@ -74,6 +75,15 @@ public class ItemController : MonoBehaviour
             currentclusterPrefabs = Random.Range(0, 3);
             clusters.Add(Instantiate(clusterPrefabs[currentclusterPrefabs], transform.position, Quaternion.identity));
             //Debug.Log(clusters.Last().transform.position.x);
+        }
+    }
+
+    void Disappear()
+    {
+        if (clusters[0].transform.position.x < -10)
+        {
+            Destroy(clusters[0]);
+            clusters.RemoveAt(0);
         }
     }
 
@@ -85,4 +95,9 @@ public class ItemController : MonoBehaviour
         }
 
     }
+
+    //void OnBecameInvisible()
+    //{
+    //    Destroy(gameObject);
+    //}
 }

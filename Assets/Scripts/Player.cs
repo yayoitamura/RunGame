@@ -6,7 +6,7 @@ using UnityEngine.UI; // ←※これを忘れずに入れる
 
 public class Player : MonoBehaviour 
 {
-    private Vector3 moveDirection;
+    public GameObject gameOver;
     private Animator animator;
     private float flap = 400f;
     private Rigidbody2D rb;
@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     Slider slider;
     Image image;
     Text scoreText;
+    Text buttonText;
 
     enum STATE
     {
@@ -38,6 +39,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         button = GameObject.Find("Button");
+        buttonText = button.gameObject.GetComponentInChildren<Text>();
         scoreText = GameObject.Find("Score").GetComponent<Text>();
 
         // スライダーを取得する
@@ -67,6 +69,7 @@ public class Player : MonoBehaviour
 
         hp = slider.maxValue;
         GameManager.instance.GAME = GameManager.GAMESTATE.PLAY;
+        gameOver.SetActive(false);
         button.SetActive(false);
         animator.SetTrigger("run");
 
@@ -123,7 +126,11 @@ public class Player : MonoBehaviour
 
     void EndGame()
     {
-        
+        gameOver.SetActive(true);
+              
+        buttonText.text = "もういちど";
+        button.SetActive(true);
+
 
     }
 
@@ -132,7 +139,7 @@ public class Player : MonoBehaviour
     {
         GameManager.instance.GAME = GameManager.GAMESTATE.END;
 
-        button.SetActive(true);
+
         //this.gameObject.SetActive(false);    
     }
 
@@ -158,64 +165,3 @@ public class Player : MonoBehaviour
         }
     }
 }
-
-
-/*
- * 
- * 
- * 
- * 
- * 
- * public class Player : MonoBehaviour {
-    private Vector3 moveDirection;
-    private Animator animator;
-    private float flap = 400f;
-    private Rigidbody rb;
-    private GameObject button;
-    private string state = "idle";
-
-    void Start()
-    {
-        animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody>();
-        button = GameObject.Find("Button");
-    }
-
-    void Update()
-    {
-        if (state == "run")
-        {
-            transform.position += transform.right * 0.09f;
-            if (transform.position.x > -3)
-            {
-                state = "Start";
-            }
-        }
-        if (Input.GetButtonDown("Horizontal"))
-        {
-            Debug.Log(Input.mousePosition);
-            animator.SetTrigger("jump");
-            rb.AddForce(Vector2.up * flap);
-        }
-    }
-
-    public void StartGame()
-    {
-        state = "run";
-        button.SetActive(false);
-        animator.SetTrigger("run");
-    }
-
-    public void Dead() 
-    {
-        button.SetActive(true);
-        //this.gameObject.SetActive(false);    
-    }
-}
- * 
- * 
- * 
- * 
- * 
- * 
- */

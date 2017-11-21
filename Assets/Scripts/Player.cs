@@ -74,7 +74,7 @@ public class Player : MonoBehaviour
         gameOver.SetActive(false);
         button.SetActive(false);
         animator.SetTrigger("run");
-        highScore = PlayerPrefs.GetInt("highScoreKey",0);
+        highScore = PlayerPrefs.GetInt(highScoreKey,0);
 
         score = 0;
         scoreText.text = string.Format("{0:D6}", score);
@@ -96,7 +96,10 @@ public class Player : MonoBehaviour
                 break;
             case STATE.RUN:
                 DecreaseHp();
-                if (Input.GetButtonDown("Horizontal") && jumpCount < 2)
+
+                // タッチを検出して動かす
+                var phase = GodTouch.GetPhase();
+                if (phase == GodPhase.Began && jumpCount < 2)
                 {
                     state = STATE.JUMP;
                 }
@@ -176,7 +179,7 @@ public class Player : MonoBehaviour
     {
         highScore = Mathf.Max(highScore, score);
         // ハイスコアを保存する
-        PlayerPrefs.SetInt("highScoreKey", highScore);
+        PlayerPrefs.SetInt(highScoreKey, highScore);
         PlayerPrefs.Save();
     }
 

@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     Image image;
     Text scoreText;
     Text buttonText;
+    Text highScoreText;
 
     private int highScore;
     private string highScoreKey = "highScore";
@@ -35,8 +36,6 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        //GameState.GameState;
-
         animator = GetComponent<Animator>();
 
         rb = GetComponent<Rigidbody2D>();
@@ -132,11 +131,13 @@ public class Player : MonoBehaviour
     void EndGame()
     {
         gameOver.SetActive(true);
-              
+        highScoreText = GameObject.Find("HighScore").gameObject.GetComponentInChildren<Text>();
+        highScoreText.text = "High Score:" + highScore +  "\nScore:" + score;
+
         buttonText.text = "もういちど";
         button.SetActive(true);
 
-
+        GameManager.instance.GAME = GameManager.GAMESTATE.BEGIN;
     }
 
 
@@ -162,7 +163,6 @@ public class Player : MonoBehaviour
         {
             score += 100;
             scoreText.text = string.Format("{0:D6}", score);
-            Debug.Log(highScore);
         }
 
         if (other.gameObject.tag == "HpItem")

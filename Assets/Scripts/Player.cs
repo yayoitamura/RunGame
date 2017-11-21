@@ -21,6 +21,9 @@ public class Player : MonoBehaviour
     Text scoreText;
     Text buttonText;
 
+    private int highScore;
+    private string highScoreKey = "highScore";
+
     enum STATE
     {
         WAIT,
@@ -72,7 +75,9 @@ public class Player : MonoBehaviour
         gameOver.SetActive(false);
         button.SetActive(false);
         animator.SetTrigger("run");
+        highScore = PlayerPrefs.GetInt("highScoreKey",0);
 
+        score = 0;
         scoreText.text = string.Format("{0:D6}", score);
     }
     void BeginGame()
@@ -138,7 +143,7 @@ public class Player : MonoBehaviour
     public void Dead() 
     {
         GameManager.instance.GAME = GameManager.GAMESTATE.END;
-
+        Save();
 
         //this.gameObject.SetActive(false);    
     }
@@ -157,6 +162,7 @@ public class Player : MonoBehaviour
         {
             score += 100;
             scoreText.text = string.Format("{0:D6}", score);
+            Debug.Log(highScore);
         }
 
         if (other.gameObject.tag == "HpItem")
@@ -164,4 +170,14 @@ public class Player : MonoBehaviour
             hp += 10;
         }
     }
+
+    // ハイスコアの保存
+    public void Save()
+    {
+        highScore = Mathf.Max(highScore, score);
+        // ハイスコアを保存する
+        PlayerPrefs.SetInt("highScoreKey", highScore);
+        PlayerPrefs.Save();
+    }
+
 }

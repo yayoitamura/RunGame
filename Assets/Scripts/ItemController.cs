@@ -6,7 +6,6 @@ public class ItemController : MonoBehaviour
 {
     // ItemPatternPrefabsプレハブを格納する
     public GameObject[] ItemPatternPrefabs;
-
     private List<GameObject> itemPatterns = new List<GameObject>();
   
     void Update()
@@ -14,17 +13,28 @@ public class ItemController : MonoBehaviour
         switch (GameManager.instance.GAME)
         {
             case GameManager.GAMESTATE.BEGIN:
+                Reset();
                 break;
             case GameManager.GAMESTATE.PLAY:
                 Appear();
-                Vanish();
                 Move();
+                Vanish();
                 break;
             case GameManager.GAMESTATE.END:
                 break;
         }
+    }
 
-
+    private void Reset()
+    {
+        if (itemPatterns.Count != 0)
+        {
+            for (int i = 0; i < itemPatterns.Count; i++)
+            {
+                Destroy(itemPatterns[i]);
+            }
+        }
+        itemPatterns.Clear();
     }
 
     void Appear()

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 41ba38b92ea88408cbd95863783bdc30
-timeCreated: 1511164843
+guid: cb3b424839be74918bc87f3bf8150875
+timeCreated: 1511339417
 licenseType: Free
 TrueTypeFontImporter:
   serializedVersion: 4
@@ -9,9 +9,9 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: FuwamokoFont
+  fontName: MANIFESTO
   fontNames:
-  - FuwamokoFont
+  - MANIFESTO
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

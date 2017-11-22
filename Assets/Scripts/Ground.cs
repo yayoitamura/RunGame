@@ -4,77 +4,69 @@ using UnityEngine;
 
 public class Ground : MonoBehaviour {
 
+    public GameObject infinity;
     // groundsプレハブを格納する
-    public GameObject[] grounds;
-    private GameObject ground;
-    private float speed = 0.2f;
+    private List<GameObject> grounds = new List<GameObject>();
+    public GameObject ground;
 
-    // 現在のground
-    private int currentGround;
-
-    IEnumerator Start()
+    private void Start()
     {
-        // Waveが存在しなければコルーチンを終了する
-        if (grounds.Length == 0)
+        Vector3 placePosition = new Vector2(-6.5f, -4.5f);
+        for (int i = 0; i < 5; i++)
         {
-            yield break;
+            grounds.Add(Instantiate(ground, placePosition, Quaternion.identity));
+            placePosition.x += 4.7f;
+            Debug.Log(ground.transform.localScale.x);
         }
 
-        while (true)
-        {
-
-            // groundを作成する
-            ground = (GameObject)Instantiate(grounds[currentGround], transform.position, Quaternion.identity);
-
-            // groundをGroundの子要素にする
-            ground.transform.parent = transform;
-
-            // groundの子要素のstepが全て削除されるまで待機する
-            while (ground.transform.childCount != 0)
-            {
-                yield return new WaitForEndOfFrame();
-            }
-
-            // groundの削除
-            Destroy(ground);
-
-            // 格納されているWaveを全て実行したらcurrentgroundを0にする（最初から -> ループ）
-            if (grounds.Length <= ++currentGround)
-            {
-                currentGround = 0;
-            }
-
-        }
-
-        //stepCollider = this.gameObject.GetComponentInChildren<BoxCollider>();
-        //Debug.Log(this.gameObject.GetComponentInChildren<BoxCollider>);
     }
 
     private void Update()
     {
-        transform.position += transform.right * -0.05f;
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "contact")
+        switch (GameManager.instance.GAME)
         {
-            ground = (GameObject)Instantiate(grounds[currentGround], transform.position, Quaternion.identity);
-
-            // groundをGroundの子要素にする
-            ground.transform.parent = transform;
+            case GameManager.GAMESTATE.BEGIN:
+                break;
+            case GameManager.GAMESTATE.PLAY:
+                Appear();
+                Move();
+                Vanish();
+                break;
+            case GameManager.GAMESTATE.END:
+                break;
         }
     }
-}
 
-/*
- * private GameObject child = transform.FindChild ("Child").gameObject;
- * Collider stepCollider = this.gameObject.GetComponentInChildren<BoxCollider>();
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- */
+    void Appear()
+    {
+        //if (grounds.Count == 0 || grounds[grounds.Count - 1].transform.position.x < 8)
+        //{
+        //    //placePosition.x += 4.7f;
+        //    //int currentPrefab = Random.Range(0, ground.Length);
+        //    grounds.Add(Instantiate(ground, transform.position, Quaternion.identity));
+        //}
+    }
+
+    void Move()
+    {
+        for (int i = 0; i < grounds.Count; i++)
+        {
+            grounds[i].transform.position += transform.right * -0.05f;
+        }
+    }
+
+    void Vanish()
+    {
+        if (grounds[0].transform.position.x < -10)
+        {
+            Destroy(grounds[0]);
+            grounds.RemoveAt(0);
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        grounds.Add(Instantiate(ground, transform.position, Quaternion.identity));
+
+    }
+}

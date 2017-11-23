@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Ground : MonoBehaviour {
-
-    public GameObject infinity;
-    // groundsプレハブを格納する
-    private List<GameObject> grounds = new List<GameObject>();
+    
     public GameObject ground;
+    public GameObject trap;
+    private List<GameObject> grounds = new List<GameObject>();
 
     private void Start()
     {
@@ -16,7 +15,7 @@ public class Ground : MonoBehaviour {
         {
             grounds.Add(Instantiate(ground, placePosition, Quaternion.identity));
             placePosition.x += 4.7f;
-            Debug.Log(ground.transform.localScale.x);
+
         }
 
     }
@@ -26,6 +25,9 @@ public class Ground : MonoBehaviour {
         switch (GameManager.instance.GAME)
         {
             case GameManager.GAMESTATE.BEGIN:
+                Appear();
+                Move();
+                Vanish();
                 break;
             case GameManager.GAMESTATE.PLAY:
                 Appear();
@@ -39,15 +41,14 @@ public class Ground : MonoBehaviour {
 
     void Appear()
     {
-        //if (grounds.Count == 0 || grounds[grounds.Count - 1].transform.position.x < 8)
-        //{
-        //    //placePosition.x += 4.7f;
-        //    //int currentPrefab = Random.Range(0, ground.Length);
-        //    grounds.Add(Instantiate(ground, transform.position, Quaternion.identity));
-        //}
+        if (grounds.Count == 0 || grounds[grounds.Count - 1].transform.position.x < 10.5f)
+        {
+            int currentPrefab = Random.Range(0, grounds.Count);
+            grounds.Add(Instantiate(grounds[currentPrefab], transform.position, Quaternion.identity));
+        }
     }
-
-    void Move()
+ 
+         void Move()
     {
         for (int i = 0; i < grounds.Count; i++)
         {
@@ -57,16 +58,10 @@ public class Ground : MonoBehaviour {
 
     void Vanish()
     {
-        if (grounds[0].transform.position.x < -10)
+        if (grounds[0].transform.position.x < -13)
         {
             Destroy(grounds[0]);
             grounds.RemoveAt(0);
         }
-    }
-
-    void OnTriggerExit2D(Collider2D collision)
-    {
-        grounds.Add(Instantiate(ground, transform.position, Quaternion.identity));
-
     }
 }

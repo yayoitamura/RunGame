@@ -58,6 +58,7 @@ public class Player : MonoBehaviour
                 break;
             case GameManager.GAMESTATE.PLAY:
                 PlayGame();
+                Falling();
                 break;
             case GameManager.GAMESTATE.END:
                 EndGame();
@@ -137,12 +138,19 @@ public class Player : MonoBehaviour
         highScoreText = GameObject.Find("HighScore").gameObject.GetComponentInChildren<Text>();
         highScoreText.text = "High Score:" + highScore +  "\nScore:" + score;
 
-        buttonText.text = "もういちど";
+        buttonText.text = "RETRY";
         button.SetActive(true);
 
         GameManager.instance.GAME = GameManager.GAMESTATE.BEGIN;
     }
 
+    void Falling()
+    {
+           
+        Renderer _renderer = GameObject.Find("hips").GetComponent<Renderer>();
+        if (!_renderer.isVisible)
+        Debug.Log(_renderer.isVisible);
+    }
 
     public void Dead() 
     {

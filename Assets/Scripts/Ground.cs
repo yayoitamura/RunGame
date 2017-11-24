@@ -8,6 +8,10 @@ public class Ground : MonoBehaviour {
     public GameObject trap;
     public GameObject[] groundPatternPrefabs;
     private List<GameObject> grounds = new List<GameObject>();
+    private int trapCount;
+    const int MAX_TRAP = 2;
+    const int GROUND = 0;
+    const int TRAP = 1;
 
     private void Start()
     {
@@ -16,9 +20,7 @@ public class Ground : MonoBehaviour {
         {
             grounds.Add(Instantiate(ground, placePosition, Quaternion.identity));
             placePosition.x += 4.7f;
-
         }
-
     }
 
     private void Update()
@@ -26,7 +28,7 @@ public class Ground : MonoBehaviour {
         switch (GameManager.instance.GAME)
         {
             case GameManager.GAMESTATE.BEGIN:
-                Appear(1);
+                Appear(GROUND);
                 Move();
                 Vanish();
                 break;
@@ -46,6 +48,18 @@ public class Ground : MonoBehaviour {
     {
         if (grounds.Count == 0 || grounds[grounds.Count - 1].transform.position.x < 10.5f)
         {
+            if (prefabIndex == 0)
+            {
+                trapCount++;
+            }
+            if (prefabIndex == 1)
+            {
+                trapCount = 0;
+            }
+            if (trapCount > MAX_TRAP)
+            {
+                prefabIndex = 1;
+            }
             grounds.Add(Instantiate(groundPatternPrefabs[prefabIndex], transform.position, Quaternion.identity));
         }
     }

@@ -6,6 +6,7 @@ public class Ground : MonoBehaviour {
     
     public GameObject ground;
     public GameObject trap;
+    public GameObject[] groundPatternPrefabs;
     private List<GameObject> grounds = new List<GameObject>();
 
     private void Start()
@@ -25,30 +26,31 @@ public class Ground : MonoBehaviour {
         switch (GameManager.instance.GAME)
         {
             case GameManager.GAMESTATE.BEGIN:
-                Appear();
+                Appear(1);
                 Move();
                 Vanish();
                 break;
             case GameManager.GAMESTATE.PLAY:
-                Appear();
+                int prefabIndex = Random.Range(0, groundPatternPrefabs.Length);
+                Appear(prefabIndex);
                 Move();
                 Vanish();
                 break;
             case GameManager.GAMESTATE.END:
+                endGame();
                 break;
         }
     }
 
-    void Appear()
+    void Appear(int prefabIndex)
     {
         if (grounds.Count == 0 || grounds[grounds.Count - 1].transform.position.x < 10.5f)
         {
-            int currentPrefab = Random.Range(0, grounds.Count);
-            grounds.Add(Instantiate(grounds[currentPrefab], transform.position, Quaternion.identity));
+            grounds.Add(Instantiate(groundPatternPrefabs[prefabIndex], transform.position, Quaternion.identity));
         }
     }
  
-         void Move()
+    void Move()
     {
         for (int i = 0; i < grounds.Count; i++)
         {
@@ -63,5 +65,10 @@ public class Ground : MonoBehaviour {
             Destroy(grounds[0]);
             grounds.RemoveAt(0);
         }
+    }
+
+    void endGame()
+    {
+        Debug.Log("endGame");
     }
 }

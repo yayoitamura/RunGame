@@ -5,11 +5,8 @@ using UnityEngine;
 public class Ground : MonoBehaviour {
 
     public GameObject ground;
-    public GameObject trap;
     public GameObject[] groundPatternPrefabs;
     private List<GameObject> grounds = new List<GameObject> ();
-    private int trapCount;
-    const int MAX_TRAP = 2;
     const int GROUND = 0;
     const int TRAP = 1;
 
@@ -41,15 +38,10 @@ public class Ground : MonoBehaviour {
     }
 
     void Appear (int prefabIndex) {
-        if (grounds.Count == 0 || grounds[grounds.Count - 1].transform.position.x < 10.5f) {
-            if (prefabIndex == 0) {
-                trapCount++;
-            }
-            if (prefabIndex == 1) {
-                trapCount = 0;
-            }
-            if (trapCount > MAX_TRAP) {
-                prefabIndex = 1;
+        int lastIndex = grounds.Count - 1;
+        if (grounds.Count == 0 || grounds[lastIndex].transform.position.x < 10.5f) {
+            if (grounds[lastIndex].gameObject.tag == "Trap" && grounds[lastIndex - 1].gameObject.tag == "Trap") {
+                prefabIndex = GROUND;
             }
             grounds.Add (Instantiate (groundPatternPrefabs[prefabIndex], transform.position, Quaternion.identity));
         }

@@ -61,6 +61,6 @@ public class Ground : MonoBehaviour {
     }
 
     void endGame () {
-        Debug.Log ("endGame");
+        // Debug.Log ("endGame");
     }
 }

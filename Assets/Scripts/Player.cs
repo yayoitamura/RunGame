@@ -47,6 +47,7 @@ public class Player : MonoBehaviour {
     }
 
     void Update () {
+        Debug.Log (GameManager.instance.GAME);
         switch (GameManager.instance.GAME) {
             case GameManager.GAMESTATE.BEGIN:
                 break;
@@ -121,11 +122,6 @@ public class Player : MonoBehaviour {
         gameOver.SetActive (true);
         highScoreText = GameObject.Find ("HighScore").gameObject.GetComponentInChildren<Text> ();
         highScoreText.text = "High Score:" + highScore + "\nScore:" + score;
-
-        buttonText.text = "RETRY";
-        button.SetActive (true);
-
-        GameManager.instance.GAME = GameManager.GAMESTATE.BEGIN;
     }
 
     void Falling () {

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
     public enum GAMESTATE {
@@ -28,6 +29,26 @@ public class GameManager : MonoBehaviour {
             // MonoBehaviourではコンストラクタを定義できない。
             // そのため、すでにインスタンスがあったら破棄する。
             Destroy (this);
+        }
+    }
+
+    void Update () {
+        switch (GameManager.instance.GAME) {
+            case GameManager.GAMESTATE.BEGIN:
+                break;
+            case GameManager.GAMESTATE.PLAY:
+                break;
+            case GameManager.GAMESTATE.END:
+                SceneLoard();
+                break;
+        }
+    }
+
+    void SceneLoard () {
+        var phase = GodTouch.GetPhase ();
+        if (phase == GodPhase.Began) {
+            Debug.Log ("end");
+            SceneManager.LoadScene (0);
         }
     }
 }

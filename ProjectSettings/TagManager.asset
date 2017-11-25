@@ -5,8 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
-  - contact
   - Item
+  - Trap
+  - HpItem
   layers:
   - Default
   - TransparentFX

@@ -51,7 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee4798b6bc1d146c1948d6511ff490cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clusterPrefabs:
-  - {fileID: 1719314528103294, guid: fbbb74f19e22a415cbde733d21a06a5e, type: 2}
-  - {fileID: 1118711831272540, guid: ca1f865a4631844099e5bde98e394188, type: 2}
-  - {fileID: 1853103462216284, guid: 5a9cb02fe32cf4b38b627c86e0625fdd, type: 2}
+  ItemPatternPrefabs:
+  - {fileID: 1197534401363890, guid: e36ab4e593cce453d99a36c7c86e51cf, type: 2}
+  - {fileID: 1872838568989490, guid: c2ad80f2882ae4cfba25c365d13812cd, type: 2}
+  - {fileID: 1551047941342782, guid: f19a9d28b59184b1c989e38f716a23ae, type: 2}
+  - {fileID: 1715389104853810, guid: c4d93a950e9ca45cda301bc7c45ae5a7, type: 2}

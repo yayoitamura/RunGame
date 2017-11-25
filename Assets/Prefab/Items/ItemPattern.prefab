@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 61181619381697854}
   - component: {fileID: 114865048035051602}
   m_Layer: 0
-  m_Name: snowman (1)
+  m_Name: Item1
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 61249452178438312}
   - component: {fileID: 114661302534788038}
   m_Layer: 0
-  m_Name: snowman (2)
+  m_Name: Item1
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 61438340918352948}
   - component: {fileID: 114265762937307436}
   m_Layer: 0
-  m_Name: snowman
+  m_Name: Item1
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,7 +89,7 @@ Transform:
   m_GameObject: {fileID: 1388590234094346}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_Children: []
   m_Father: {fileID: 4142930725059614}
   m_RootOrder: 1
@@ -118,7 +118,7 @@ Transform:
   m_GameObject: {fileID: 1733510821681158}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_Children: []
   m_Father: {fileID: 4142930725059614}
   m_RootOrder: 0
@@ -131,7 +131,7 @@ Transform:
   m_GameObject: {fileID: 1732914574193314}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_Children: []
   m_Father: {fileID: 4142930725059614}
   m_RootOrder: 2

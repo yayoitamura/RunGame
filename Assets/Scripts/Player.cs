@@ -6,7 +6,7 @@ using UnityEngine.UI; // ←※これを忘れずに入れる
 public class Player : MonoBehaviour {
     public GameObject gameOver;
     private Animator animator;
-    private float flap = 370f;
+    private float flap = 400f;
     private Rigidbody2D rb;
     private GameObject button;
     private int jumpCount;
@@ -51,7 +51,6 @@ public class Player : MonoBehaviour {
                 break;
             case GameManager.GAMESTATE.PLAY:
                 PlayGame ();
-                Falling ();
                 break;
             case GameManager.GAMESTATE.END:
                 EndGame ();
@@ -123,14 +122,6 @@ public class Player : MonoBehaviour {
         highScoreText.text = "High Score:" + highScore + "\nScore:" + score;
     }
 
-    void Falling () {
-
-        Renderer _renderer = GameObject.Find ("hips").GetComponent<Renderer> ();
-        if (!_renderer.isVisible) {
-            Dead ();
-        }
-    }
-
     public void Dead () {
         Save ();
         GameManager.instance.GAME = GameManager.GAMESTATE.END;
@@ -163,6 +154,10 @@ public class Player : MonoBehaviour {
             if (hp > slider.maxValue / 5) {
                 image.color = Color.green;
             }
+        }
+
+        if (other.gameObject.tag == "Trap") {
+            Dead ();
         }
     }
 

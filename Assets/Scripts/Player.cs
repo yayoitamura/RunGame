@@ -119,7 +119,7 @@ public class Player : MonoBehaviour {
         gameObject.SetActive (false);
         gameOver.SetActive (true);
         highScoreText = GameObject.Find ("HighScore").gameObject.GetComponentInChildren<Text> ();
-        highScoreText.text = "High Score:" + highScore + "\nScore:" + score;
+        highScoreText.text = "High Score:" + highScore + "\n\nScore:" + score;
     }
 
     public void Dead () {

@@ -12,12 +12,12 @@ public class Player : MonoBehaviour {
     private int jumpCount;
 
     private float hp;
+    private float recoveryValue = 5;
     private int score = 000000;
 
     Slider slider;
     Image image;
     Text scoreText;
-    Text buttonText;
     Text highScoreText;
 
     private int highScore;
@@ -37,7 +37,6 @@ public class Player : MonoBehaviour {
         rb = GetComponent<Rigidbody2D> ();
 
         button = GameObject.Find ("Button");
-        buttonText = button.gameObject.GetComponentInChildren<Text> ();
         scoreText = GameObject.Find ("Score").GetComponent<Text> ();
 
         // スライダーを取得する
@@ -47,7 +46,6 @@ public class Player : MonoBehaviour {
     }
 
     void Update () {
-        Debug.Log (GameManager.instance.GAME);
         switch (GameManager.instance.GAME) {
             case GameManager.GAMESTATE.BEGIN:
                 break;
@@ -152,7 +150,11 @@ public class Player : MonoBehaviour {
         }
 
         if (other.gameObject.tag == "HpItem") {
-            hp += 10;
+            hp += Mathf.Min (slider.maxValue - hp, recoveryValue);
+            slider.value = hp;
+            if (hp > slider.maxValue / 5) {
+                image.color = Color.green;
+            }
         }
     }
 

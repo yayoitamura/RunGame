@@ -32,7 +32,6 @@ public class Ground : MonoBehaviour {
                 Vanish ();
                 break;
             case GameManager.GAMESTATE.END:
-                endGame ();
                 break;
         }
     }
@@ -49,7 +48,7 @@ public class Ground : MonoBehaviour {
 
     void Move () {
         for (int i = 0; i < grounds.Count; i++) {
-            grounds[i].transform.position += transform.right * -0.05f;
+            grounds[i].transform.position += transform.right * -0.07f;
         }
     }
 
@@ -58,9 +57,5 @@ public class Ground : MonoBehaviour {
             Destroy (grounds[0]);
             grounds.RemoveAt (0);
         }
-    }
-
-    void endGame () {
-        // Debug.Log ("endGame");
     }
 }

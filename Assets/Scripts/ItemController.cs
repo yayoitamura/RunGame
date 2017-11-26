@@ -45,7 +45,7 @@ public class ItemController : MonoBehaviour {
 
     void Move () {
         for (int i = 0; i < itemPatterns.Count; i++) {
-            itemPatterns[i].transform.position += transform.right * -0.05f;
+            itemPatterns[i].transform.position += transform.right * -0.07f;
         }
     }
 

@@ -2,7 +2,7 @@
 
 public class Background : MonoBehaviour {
     // スクロールするスピード
-    private float speed = 0.2f;
+    private float speed = 0.3f;
 
     void Update () {
         switch (GameManager.instance.GAME) {

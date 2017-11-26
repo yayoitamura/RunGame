@@ -13,7 +13,6 @@ public class ItemController : MonoBehaviour {
     void Update () {
         switch (GameManager.instance.GAME) {
             case GameManager.GAMESTATE.BEGIN:
-                Reset ();
                 break;
             case GameManager.GAMESTATE.PLAY:
                 Appear ();
@@ -21,6 +20,7 @@ public class ItemController : MonoBehaviour {
                 Vanish ();
                 break;
             case GameManager.GAMESTATE.END:
+                Reset ();
                 break;
         }
     }

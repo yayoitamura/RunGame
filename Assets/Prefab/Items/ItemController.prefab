@@ -51,6 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee4798b6bc1d146c1948d6511ff490cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TopPosition: {x: 0, y: 0, z: 0}
+  MiddlePosition: {x: 0, y: 0, z: 0}
   ItemPatternPrefabs:
   - {fileID: 1197534401363890, guid: e36ab4e593cce453d99a36c7c86e51cf, type: 2}
   - {fileID: 1872838568989490, guid: c2ad80f2882ae4cfba25c365d13812cd, type: 2}

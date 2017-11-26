@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemController : MonoBehaviour {
+
+    private Vector3 topPosition = new Vector3 (11, 3, 0);
+    private Vector3 middlePosition = new Vector3 (11, -1, 0);
     // ItemPatternPrefabsプレハブを格納する
     public GameObject[] ItemPatternPrefabs;
     private List<GameObject> itemPatterns = new List<GameObject> ();
@@ -33,8 +36,10 @@ public class ItemController : MonoBehaviour {
 
     void Appear () {
         if (itemPatterns.Count == 0 || itemPatterns[itemPatterns.Count - 1].transform.position.x < 8) {
-            int currentPrefab = Random.Range (0, ItemPatternPrefabs.Length);
-            itemPatterns.Add (Instantiate (ItemPatternPrefabs[currentPrefab], transform.position, Quaternion.identity));
+            int middlePrefab = Random.Range (0, ItemPatternPrefabs.Length);
+            itemPatterns.Add (Instantiate (ItemPatternPrefabs[middlePrefab], middlePosition, Quaternion.identity));
+            int topPrefab = Random.Range (0, ItemPatternPrefabs.Length);
+            itemPatterns.Add (Instantiate (ItemPatternPrefabs[topPrefab], topPosition, Quaternion.identity));
         }
     }
 

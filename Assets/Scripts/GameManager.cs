@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour {
             case GameManager.GAMESTATE.PLAY:
                 break;
             case GameManager.GAMESTATE.END:
-                SceneLoard();
+                SceneLoard ();
                 break;
         }
     }
@@ -47,7 +47,6 @@ public class GameManager : MonoBehaviour {
     void SceneLoard () {
         var phase = GodTouch.GetPhase ();
         if (phase == GodPhase.Began) {
-            Debug.Log ("end");
             SceneManager.LoadScene (0);
         }
     }

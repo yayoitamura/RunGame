@@ -6,7 +6,7 @@ using UnityEngine.UI; // ←※これを忘れずに入れる
 public class Player : MonoBehaviour {
     public GameObject gameOver;
     private Animator animator;
-    private float flap = 400f;
+    private float flap = 370f;
     private Rigidbody2D rb;
     private GameObject button;
     private int jumpCount;
@@ -117,6 +117,7 @@ public class Player : MonoBehaviour {
     }
 
     void EndGame () {
+        gameObject.SetActive (false);
         gameOver.SetActive (true);
         highScoreText = GameObject.Find ("HighScore").gameObject.GetComponentInChildren<Text> ();
         highScoreText.text = "High Score:" + highScore + "\nScore:" + score;
@@ -126,15 +127,22 @@ public class Player : MonoBehaviour {
 
         Renderer _renderer = GameObject.Find ("hips").GetComponent<Renderer> ();
         if (!_renderer.isVisible) {
-            Destroy (gameObject);
+            Dead ();
         }
     }
 
     public void Dead () {
-        GameManager.instance.GAME = GameManager.GAMESTATE.END;
         Save ();
-
+        GameManager.instance.GAME = GameManager.GAMESTATE.END;
         //this.gameObject.SetActive(false);    
+    }
+
+    // ハイスコアの保存
+    public void Save () {
+        highScore = Mathf.Max (highScore, score);
+        // ハイスコアを保存する
+        PlayerPrefs.SetInt (highScoreKey, highScore);
+        PlayerPrefs.Save ();
     }
 
     void OnCollisionEnter2D (Collision2D collision) {
@@ -156,14 +164,6 @@ public class Player : MonoBehaviour {
                 image.color = Color.green;
             }
         }
-    }
-
-    // ハイスコアの保存
-    public void Save () {
-        highScore = Mathf.Max (highScore, score);
-        // ハイスコアを保存する
-        PlayerPrefs.SetInt (highScoreKey, highScore);
-        PlayerPrefs.Save ();
     }
 
 }
